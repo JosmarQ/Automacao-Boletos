@@ -1,7 +1,11 @@
 import sys
 from PyQt5.QtCore import Qt, QUrl
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QHBoxLayout, QPushButton, QSlider, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QHBoxLayout, QPushButton, QSlider, QVBoxLayout, QWidget, QTextEdit
+from separar import separar_pdf
+from main import Open_Browser, Load_Excel, Loop
+
+FLAG = False
 
 class App(QMainWindow):
     def __init__(self):
@@ -11,7 +15,7 @@ class App(QMainWindow):
 
     def initUI(self):
         self.setWindowTitle('Boleto Automatico')
-        self.setGeometry(100, 100, 400, 250)
+        self.setGeometry(100, 100, 400, 500)
 
         # Create a media player
         self.media_player = QMediaPlayer()
@@ -45,15 +49,33 @@ class App(QMainWindow):
         self.controls_layout.addWidget(self.play_button)
         self.controls_layout.addLayout(self.volume_layout)
 
-        # Create a button for calling another program
-        self.call_program_button = QPushButton('Call Another Program', self)
+        # Button to initialize
+        self.call_program_button = QPushButton('Open Chrome', self)
         self.call_program_button.setStyleSheet("background-color: black; color: #00FF00; border: 2px solid #00FF00;")
-        self.call_program_button.clicked.connect(self.call_another_program)
+        self.call_program_button.clicked.connect(self.call_start)
+
+        # Button to start
+        self.call_loop_button = QPushButton('Start Script', self)
+        self.call_loop_button.setStyleSheet("background-color: black; color: #00FF00; border: 2px solid #00FF00;")
+        self.call_loop_button.clicked.connect(self.call_loop)
+
+        # Button to stop
+        self.stop_loop_button = QPushButton('Stop Script', self)
+        self.stop_loop_button.setStyleSheet("background-color: black; color: #00FF00; border: 2px solid #00FF00;")
+        self.stop_loop_button.clicked.connect(self.stop_loop)
+
+        # Create a text box for showing progress
+        self.progress_text = QTextEdit(self)
+        self.progress_text.setReadOnly(True)
+        self.progress_text.setStyleSheet("background-color: black; color: #00FF00; border: 2px solid #00FF00;")
 
         # Create a vertical layout for the controls and the additional button
         self.main_layout = QVBoxLayout()
         self.main_layout.addLayout(self.controls_layout)
         self.main_layout.addWidget(self.call_program_button)
+        self.main_layout.addWidget(self.call_loop_button)
+        self.main_layout.addWidget(self.stop_loop_button)
+        self.main_layout.addWidget(self.progress_text)
 
         # Set the layout of the media output widget
         self.media_output.setLayout(self.main_layout)
@@ -62,17 +84,48 @@ class App(QMainWindow):
         self.setCentralWidget(self.media_output)
 
     def play_music(self):
-        music_content = QMediaContent(QUrl.fromLocalFile('Automacao-Boletos\music.mp3'))
+        music_content = QMediaContent(QUrl.fromLocalFile('music.mp3'))
         self.media_player.setMedia(music_content)
         self.media_player.play()
+        self.progress_text.append('''         #################################  
+      ##################################  
+    ###################################  
+   #### \t      #####\t          ####
+  ###   \t      #####\t          #####           
+  #     \t      #####\t          #####           
+  #     \t      #####\t            ####            
+        \t      #### \t            ####            
+        \t      #### \t            ####            
+        \t      #### \t            ####            
+        \t    ##### \t            #####            
+        \t    ##### \t            #####            
+        \t    ####  \t            #####            
+        \t    ####  \t            #####            
+        \t   #####  \t            #####            
+        \t ######   \t            #####            
+        \t#######   \t            #####        ##  
+        \t#######   \t            ######       ##  
+        \t#######   \t             ###########  
+        \t#######   \t             ###########   
+       \t#######    \t              #########    
+       \t######     \t               ######
+''')
 
     def set_volume(self):
         volume = self.volume_slider.value()
         self.media_player.setVolume(volume)
 
-    def call_another_program(self):
-        # Add code here to call another program when the button is clicked
-        pass  # Replace this with the actual code to call the program
+    def call_start(self):
+        separar_pdf()
+        Load_Excel()
+        Open_Browser()
+    
+    def call_loop(self):
+        FLAG=False
+        Loop()
+
+    def stop_loop(self):
+        FLAG=True
 
 def main():
     app = QApplication(sys.argv)
