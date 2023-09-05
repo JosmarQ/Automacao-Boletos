@@ -1,0 +1,1 @@
+Olá {nome}, sua página é a {pagina}.
