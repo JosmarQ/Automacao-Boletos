@@ -14,7 +14,7 @@ def Open_Browser():
     driver = webdriver.Chrome(service=service, options=options)
     driver.get("https://web.whatsapp.com")
 
-def Load_Excel(path='PlanilhaCondominos.xlsx'):
+def Load_Excel(path):
     global df
     df = pd.read_excel(path)
 

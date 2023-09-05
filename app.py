@@ -112,7 +112,7 @@ class App(QMainWindow):
         self.media_player.setVolume(volume)
 
     def call_start(self):
-        path = 'PlanilhaCondominos.xlsx'
+        path = 'PlanilhaCondominio.xlsx'
         separar_pdf()
         self.progress_text.append('PDF recortado . . . . . . . . .  OK')
         Load_Excel(path)
