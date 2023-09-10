@@ -1,1 +1,15 @@
-Olá {nome}, aqui está sua página do PDF ({pagina}).
+Olá Prezado(a), {nome}, 
+Boa tarde,
+.
+Segue, para suas providências, o boleto da Taxa condominial de Setembro 2023.
+.
+Lembramos que esta é a primeira emissão de boletos feita pela LLZ Garantidora de Crédito, empresa responsável pelo serviço de emissão e cobrança. 
+Neste mês, em caráter excepcional fizemos a impressão para todos os moradores por precaução.
+.
+Se você já recebeu o boleto impresso, por favor desconsidere este.
+.
+Lembro-vos que a partir de setembro/23 todas e quaisquer negociações de taxas condominiais ou extras deverá ser feita diretamente com a empresa que poderá entrar em contato direto com os responsáveis quando necessário.
+.
+Cordialmente,
+Gestão 2023.
+({pagina}).
